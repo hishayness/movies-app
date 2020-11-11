@@ -7,4 +7,8 @@ const Movie = new Schema({
 	rating: { type: Number, required: true }
 }, { timestamps: true });
 
+Movie.query.byName = function(name) {
+	return this.where({ name: new RegExp(name, 'i') });
+}
+
 module.exports = mongoose.model('movies', Movie);

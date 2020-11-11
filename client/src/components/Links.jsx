@@ -19,7 +19,7 @@ class Links extends Component {
 		return (
 			<>
 				<Link to="/" className="navbar-brand">
-					My first MERN application
+					Online Movie Search
 				</Link>
 				<Collapse>
 					<List>
@@ -31,6 +31,11 @@ class Links extends Component {
 						<Item>
 							<Link to="/movies/create" className="nav-link">
 								Create Movie
+							</Link>
+						</Item>						
+						<Item>
+							<Link to="/movies/search" className="nav-link">
+								Search Movie
 							</Link>
 						</Item>						
 					</List>

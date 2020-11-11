@@ -7,10 +7,6 @@ const Title = styled.h1.attrs({
 	className: 'h1'
 })``;
 
-const Wrapper = styled.div.attrs({
-	className: 'form-group'
-})``;
-
 const Label = styled.label`
 	margin: 5px;
 `;
@@ -60,7 +56,6 @@ const MoviesInsert = props => {
 
 		const insert = async () => {
 			await api.insertMovie(payload).then(res => {
-				window.alert('Movie inserted successfully');
 				setName('');
 				setRating('');
 				setTime('');
@@ -71,7 +66,7 @@ const MoviesInsert = props => {
 	}
 
 	return (
-		<Wrapper>
+		<div>
 			<Title>Create Movie</Title>
 			<Label>Name:</Label>
 			<InputText
@@ -99,7 +94,7 @@ const MoviesInsert = props => {
 
 			<Button onClick={handleIncludeMovie}>Add Movie</Button>
 			<CancelButton href="/movies/list">Cancel</CancelButton>
-		</Wrapper>
+		</div>
 	);
 }
 
