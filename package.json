@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd client && npm run build && cd .. && node server/index.js -p PORT"
+    "start": "npm install && cd client && npm run build && cd .. && node server/index.js -p PORT"
   },
   "dependencies": {
     "client": "file:./client",
