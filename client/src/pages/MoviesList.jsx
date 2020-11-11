@@ -130,17 +130,6 @@ const MoviesList = props => {
 			Header: 'Time',
 			accessor: 'time',
 			Cell: props => <span>{props.value.join(' / ')}</span>
-		},
-		{
-			Header: '',
-//			accessor: '',
-			Cell: props => {
-				return (
-					<span>
-						<DeleteMovie id={props.orignal._id} />
-					</span>
-				)
-			}
 		}
 	]
 
