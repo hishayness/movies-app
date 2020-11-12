@@ -14,12 +14,12 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'Mongo DB connection error:'));
 
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 app.use('/api', movieRouter);
 
 app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+	res.sendFile(path.join(__dirname, './client/build', 'index.html'));
 })
 
 app.listen(apiPort, () => console.log(`Server running on post ${apiPort}`));
