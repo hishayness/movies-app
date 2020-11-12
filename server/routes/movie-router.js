@@ -1,6 +1,7 @@
 const express = require('express');
 
 const MovieCtrl = require('../controllers/movie-ctrl');
+const UserCtrl = require('../controllers/user-ctrl');
 
 const router = express.Router();
 
@@ -10,5 +11,8 @@ router.delete('/movie/:id', MovieCtrl.deleteMovie);
 router.get('/movie/:id', MovieCtrl.getMovieById);
 router.get('/movies', MovieCtrl.getMovies);
 router.get('/movies/search/:query', MovieCtrl.searchMovies);
+router.post('/join', [UserCtrl.userExists], UserCtrl.signup);
+
+UserCtrl.initRole();
 
 module.exports = router;

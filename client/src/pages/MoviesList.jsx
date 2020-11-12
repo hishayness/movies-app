@@ -17,12 +17,12 @@ const DeleteMovie = ({ id }) => {
 	const deleteUser = async e => {
 		e.preventDefault();
 
-//		if(window.confirm(`Do you want to delete the movie ${id} permanently`)) {
+		if(window.confirm(`Do you want to delete the movie ${id} permanently`)) {
 			await api.deleteMovieById(id)
 				.then(res => {
 					window.location.reload();
 				})
-//		}
+		}
 	}
 
 	return <Delete onClick={deleteUser}>Delete</Delete>;

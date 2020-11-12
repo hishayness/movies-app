@@ -66,7 +66,7 @@ const MoviesInsert = props => {
 	}
 
 	return (
-		<div>
+		<>
 			<Title>Create Movie</Title>
 			<Label>Name:</Label>
 			<InputText
@@ -94,7 +94,7 @@ const MoviesInsert = props => {
 
 			<Button onClick={handleIncludeMovie}>Add Movie</Button>
 			<CancelButton href="/movies/list">Cancel</CancelButton>
-		</div>
+		</>
 	);
 }
 

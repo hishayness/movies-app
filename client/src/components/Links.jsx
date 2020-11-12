@@ -37,7 +37,12 @@ class Links extends Component {
 							<Link to="/movies/search" className="nav-link">
 								Search Movie
 							</Link>
-						</Item>						
+						</Item>	
+						<Item>
+							<Link to="/join" className="nav-link">
+								Join
+							</Link>
+						</Item>												
 					</List>
 				</Collapse>
 			</>
