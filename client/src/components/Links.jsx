@@ -42,7 +42,12 @@ class Links extends Component {
 							<Link to="/join" className="nav-link">
 								Join
 							</Link>
-						</Item>												
+						</Item>		
+						<Item>
+							<Link to="/login" className="nav-link">
+								Login
+							</Link>
+						</Item>																		
 					</List>
 				</Collapse>
 			</>

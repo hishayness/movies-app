@@ -18,6 +18,7 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route path="/" exact component={lazy(() => import('../pages/Home'))} />
+            <Route path="/login" exact component={lazy(() => import('../pages/Login'))} />
             <Route path="/join" exact component={lazy(() => import('../pages/Join'))} />
             <Route path="/movies/search" exact component={lazy(() => import('../pages/MoviesSearch'))} />
             <Route path="/movies/list" exact component={lazy(() => import('../pages/MoviesList'))} />

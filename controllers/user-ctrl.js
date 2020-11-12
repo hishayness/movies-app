@@ -6,17 +6,9 @@ const bcrypt = require('bcryptjs');
 initRole = () => {
 	Role.estimatedDocumentCount((err, count) => {
 		if(!err && count === 0) {
-			new Role({
-				name: 'user'
-			}).save();
-
-			new Role({
-				name: 'admin'
-			}).save();
-
-			new Role({
-				name: 'moderator'
-			}).save();
+			new Role({ name: 'user' }).save();
+			new Role({ name: 'admin' }).save();
+			new Role({ name: 'moderator' }).save();
 		}
 	});
 }
@@ -35,11 +27,11 @@ userExists = async (req, res, next) => {
 		next();
 	}
 	catch(err) {
-		return res.status(400).json({ success: false, message: 'User exists!' });
+		return res.status(500).json({ success: false, message: 'Bad request!' });
 	}
 }
 
-verifyToken = (req, res) => {
+verifyToken = (req, res, next) => {
 	let token = req.headers['x-access-token'];
 
 	if(!token) {
@@ -52,7 +44,8 @@ verifyToken = (req, res) => {
 		}
 
 		req.userId = decoded.id;
-		next();
+
+		return res.status(200).json({ success: true, message: "valid!" });
 	});
 }
 
@@ -60,7 +53,7 @@ signup = async (req, res) => {
 	const user = new User({
 		username: req.body.username,
 		email: req.body.email,
-		password: bcrypt.hashSync(req.body.password, 5)
+		password: bcrypt.hashSync(req.body.password, 8)
 	});
 
 	try {
@@ -81,9 +74,41 @@ signup = async (req, res) => {
 	}
 }
 
+login = async (req, res) => {
+	try {
+		const user = await User.findOne({ username: req.body.username }).populate('roles');
+
+		if(!user) {
+			return res.status(400).json({ success: false, message: 'User not found! '});
+		}
+
+		if(!bcrypt.compareSync(req.body.password, user.password)) {
+			return res.status(400).json({ success: false, message: 'Password invalid! '});			
+		}
+
+		let token = jwt.sign({ id: user._id }, 'secret', { expiresIn: 20 });
+
+		return res.status(200).json({
+			success: true,
+			data: {
+				username: user.username,
+				email: user.email,
+				roles: user.roles,
+				id: user._id,
+				accessToken: token
+			}
+		})
+	}
+	catch(err) {
+		console.log(err);
+		return res.status(400).json({ success: false, message: 'Could not login! '});
+	}
+}
+
 module.exports = {
 	initRole,
 	userExists,
 	verifyToken,
-	signup
+	signup,
+	login
 }
