@@ -12,6 +12,7 @@ export const getMovieById = id => api.get(`/movie/${id}`);
 export const searchMovies = query => api.get(`/movies/search/${query}`);
 export const registerUser = payload => api.post(`join`, payload);
 export const loginUser = payload => api.post(`login`, payload);
+export const verifyUser = () => api.get(`/verify`);
 
 const apis = {
 	insertMovie,
@@ -21,7 +22,8 @@ const apis = {
 	getMovieById,
 	searchMovies,
 	registerUser,
-	loginUser
+	loginUser,
+	verifyUser
 }
 
 export default apis;

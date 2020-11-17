@@ -43,9 +43,12 @@ verifyToken = (req, res, next) => {
 			return res.status(401).send({ message: 'Unauthorized!' });
 		}
 
-		req.userId = decoded.id;
-
-		return res.status(200).json({ success: true, message: "valid!" });
+		if(req.headers['api-json']) {
+			return res.status(200).json({ success: true, message: "valid!" });
+		}
+		else {
+			next();
+		}
 	});
 }
 

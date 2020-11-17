@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import api from '../api';
+import { useAuth } from '../provider/auth';
 
 const Title = styled.h1.attrs({
 	className: 'h1'
@@ -28,6 +29,7 @@ const Login = props => {
 		password: ''
 	}
 	
+	const auth = useAuth();
 	const [data, setData] = useState(defaults);
 
 	const handleOnSubmit = e => {
@@ -45,13 +47,7 @@ const Login = props => {
 	}
 
 	const handleLogin = async e => {
-		await api.loginUser(data)
-			.then(res => {
-//				setData(defaults);
-			})
-			.catch(err => {
-				console.log(err);
-			});		
+		await auth.onSignIn(data);
 	}
 
 	return (<>
