@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from '../api';
 
 const authContext = createContext();
@@ -13,11 +13,12 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
 	const onSignIn = async (data) => {
 		await api.loginUser(data)
 			.then(res => {
+				localStorage.setItem('user', JSON.stringify(res?.data?.data));
 				setUser(res.data.data);
 			})
 			.catch(err => {
@@ -26,6 +27,7 @@ function useProvideAuth() {
 	}
 
 	const onSignOut = async () => {
+		localStorage.removeItem('user');
 		setUser(null);
 	}
 

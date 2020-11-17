@@ -14,6 +14,7 @@ router.get('/movies/search/:query', MovieCtrl.searchMovies);
 router.post('/join', [UserCtrl.userExists], UserCtrl.signup);
 router.post('/login', UserCtrl.login);
 router.get('/auth', UserCtrl.verifyToken);
+router.get('/user', [UserCtrl.verifyToken], UserCtrl.getUser);
 
 UserCtrl.initRole();
 

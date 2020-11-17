@@ -13,6 +13,30 @@ initRole = () => {
 	});
 }
 
+getUser = async (req, res) => {
+	try {
+		const _user = await User.findOne({ _id: req.userId }).populate('roles');
+
+		if(_user) {
+			return res.status(200).json({ 
+				success: true, 
+				data: {
+					username: _user.username,
+					email: _user.email,
+					roles: _user.roles,
+					id: _user._id
+				}
+			});
+		}
+		else {
+			return res.status(404).json({ success: false, message: 'User not found!' });
+		}
+	}
+	catch(err) {
+		return res.status(500).json({ success: false, message: 'Bad request!' });
+	}
+}
+
 userExists = async (req, res, next) => {
 	try {
 		const [username, email] = await Promise.all([
@@ -32,7 +56,7 @@ userExists = async (req, res, next) => {
 }
 
 verifyToken = (req, res, next) => {
-	let token = req.headers['x-access-token'];
+	let token = req.cookies['token'];
 
 	if(!token) {
 		return res.status(403).send({ message: 'No token provided' });
@@ -43,12 +67,9 @@ verifyToken = (req, res, next) => {
 			return res.status(401).send({ message: 'Unauthorized!' });
 		}
 
-		if(req.headers['api-json']) {
-			return res.status(200).json({ success: true, message: "valid!" });
-		}
-		else {
-			next();
-		}
+		req.userId = decoded.id;
+
+		next();
 	});
 }
 
@@ -89,16 +110,15 @@ login = async (req, res) => {
 			return res.status(400).json({ success: false, message: 'Password invalid! '});			
 		}
 
-		let token = jwt.sign({ id: user._id }, 'secret', { expiresIn: 20 });
+		let token = jwt.sign({ id: user._id }, 'secret', { expiresIn: 86400 });
 
-		return res.status(200).json({
+		return res.cookie('token', token, { httpOnly: true }).status(200).json({
 			success: true,
 			data: {
 				username: user.username,
 				email: user.email,
 				roles: user.roles,
-				id: user._id,
-				accessToken: token
+				id: user._id
 			}
 		})
 	}
@@ -113,5 +133,6 @@ module.exports = {
 	userExists,
 	verifyToken,
 	signup,
-	login
+	login,
+	getUser
 }

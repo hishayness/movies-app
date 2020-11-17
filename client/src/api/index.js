@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-	baseURL: `${process.env.REACT_APP_API_SERVER || `http://localhost:3000/`}api`
+	baseURL: `${process.env.REACT_APP_API_SERVER || `http://localhost:8000/`}api`,
+	withCredentials: true
 });
 
 export const insertMovie = payload => api.post(`/movie`, payload);
@@ -13,6 +14,7 @@ export const searchMovies = query => api.get(`/movies/search/${query}`);
 export const registerUser = payload => api.post(`join`, payload);
 export const loginUser = payload => api.post(`login`, payload);
 export const verifyUser = () => api.get(`/verify`);
+export const getUser = () => api.get(`/user`);
 
 const apis = {
 	insertMovie,
@@ -23,7 +25,8 @@ const apis = {
 	searchMovies,
 	registerUser,
 	loginUser,
-	verifyUser
+	verifyUser,
+	getUser
 }
 
 export default apis;

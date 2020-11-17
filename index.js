@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
@@ -11,6 +12,7 @@ const movieRouter = require('./routes/movie-router');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 db.on('error', console.error.bind(console, 'Mongo DB connection error:'));
 
