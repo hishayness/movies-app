@@ -12,6 +12,10 @@ const schema = buildASTSchema(gql`
 		role(id: ID): Role
 	}
 
+	type Mutation {
+		setRole(name: String): Role
+	}
+
 	type User {
 		id: ID
 		email: String
@@ -28,7 +32,8 @@ const schema = buildASTSchema(gql`
 const rootValue = {
 	users: () => UserCtrl.getUsers(),
 	roles: () => UserCtrl.getRoles(),
-	role: ({ id }) => UserCtrl.getRole(id)
+	role: ({ id }) => UserCtrl.getRole(id),
+	setRole: ({ name }) => UserCtrl.setRole(name)
 }
 
 module.exports = graphqlHTTP({ schema, rootValue });

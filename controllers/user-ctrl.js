@@ -13,6 +13,19 @@ initRole = () => {
 	});
 }
 
+setRole = async name => {
+	const role = new Role({
+		name
+	});
+
+	try {
+		return await role.save();
+	}
+	catch(err) {
+		console.log(err);
+	}
+}
+
 getUser = async (req, res) => {
 	try {
 		const _user = await User.findOne({ _id: req.userId }).populate('roles');
@@ -164,5 +177,6 @@ module.exports = {
 	getUser,
 	getUsers,
 	getRole,
-	getRoles
+	getRoles,
+	setRole
 }
