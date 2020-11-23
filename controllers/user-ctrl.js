@@ -37,6 +37,33 @@ getUser = async (req, res) => {
 	}
 }
 
+getUsers = async () => {
+	try {
+		return await User.find({}).populate('roles');
+	}
+	catch(err) {
+		throw err;
+	}
+}
+
+getRole = async id => {
+	try {
+		return await Role.findOne({ _id: id });
+	}
+	catch(err) {
+		throw err;
+	}
+}
+
+getRoles = async () => {
+	try {
+		return await Role.find({});
+	}
+	catch(err) {
+		throw err;
+	}
+}
+
 userExists = async (req, res, next) => {
 	try {
 		const [username, email] = await Promise.all([
@@ -134,5 +161,8 @@ module.exports = {
 	verifyToken,
 	signup,
 	login,
-	getUser
+	getUser,
+	getUsers,
+	getRole,
+	getRoles
 }
